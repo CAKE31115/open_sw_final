@@ -22,7 +22,21 @@ MongoClient.connect("mongodb+srv://tkdsk0:hallym@cluster0.umjnnut.mongodb.net/?r
 app.get('/', function (req, res) {
   db.collection('review').find().toArray(function (err, result) {
     console.log(result);
+    res.render('index.ejs', { loginfo: result })
+  })
+})
+
+app.get('/map', function (req, res) {
+  db.collection('review').find().toArray(function (err, result) {
+    console.log(result);
     res.render('map.ejs', { loginfo: result })
+  })
+})
+
+app.get('/about', function (req, res) {
+  db.collection('review').find().toArray(function (err, result) {
+    console.log(result);
+    res.render('about.ejs', { loginfo: result })
   })
 })
 

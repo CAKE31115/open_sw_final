@@ -12,8 +12,24 @@
     <link href="css/rating.css" rel="stylesheet">
   </head>
   <body>
-
-    <h1>춘천 육림고개!</h1>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">춘천</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/map">육림고개</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about">about</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
     <div id="map" style="width:100%;height:1000px;"></div>
 
@@ -25,10 +41,10 @@
       };
       // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
       var map = new kakao.maps.Map(mapContainer, mapOption);
-      function setDraggable(draggable) {
+      function setDragZoomable(able) {
         // 마우스 드래그로 지도 이동 가능여부를 설정합니다
-        map.setDraggable(draggable);   
-        map.setZoomable(draggable);     
+        map.setDraggable(able);   
+        map.setZoomable(able);     
       }
       var inn_polygon = new kakao.maps.Polygon({
         map: map,
