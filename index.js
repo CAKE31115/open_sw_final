@@ -20,10 +20,7 @@ MongoClient.connect("mongodb+srv://tkdsk0:hallym@cluster0.umjnnut.mongodb.net/?r
 })
 
 app.get('/', function (req, res) {
-  db.collection('review').find().toArray(function (err, result) {
-    console.log(result);
-    res.render('index.ejs', { loginfo: result })
-  })
+  res.render('index.ejs', { })
 })
 
 app.get('/map', function (req, res) {
@@ -34,10 +31,7 @@ app.get('/map', function (req, res) {
 })
 
 app.get('/about', function (req, res) {
-  db.collection('review').find().toArray(function (err, result) {
-    console.log(result);
-    res.render('about.ejs', { loginfo: result })
-  })
+  res.render('about.ejs', { })
 })
 
 app.post('/add', function (req, res) {

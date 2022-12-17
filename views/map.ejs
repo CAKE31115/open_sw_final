@@ -65,47 +65,51 @@
 
       var inn_content =`<% var store_name = 'store_inn'; %>
         <div class="card" style="width: 500px;">
-        <form action="/add" method="POST">
-        <input type="hidden" id="StoreName" name="name" value=<%=store_name %>>
-        <div class="mb-2">
-            <label for="exampleInputPassword1" class="rating-label">
-                <div id="ratingHelp" class="form-text">별점을 남겨주세요</div>
-                <input class="rating rating--nojs" style="--starsize:2rem;" name="rating" max="5" step="0.1" type="range" value="3">
-            </label>
-        </div>
-        <div class="mb-2">
-            <div id="reviewHelp" class="form-text">리뷰를 적어주세요</div>
-            <input class="form-control" name="review" id="inputReview" aria-describedby="reviewHelp">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" onclick="close_overlay(innOverlay)" class="btn btn-danger">Close</button>
-    </form>
-
-
-    <div style="height: 200px; overflow-y: scroll;">
-    <table class="table" style="width: 500px;">
-        <thead>
-            <tr>
-                <th scope="col">rating</th>
-                <th scope="col">review</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% console.log(loginfo.length) %>
-            <% for (var i=0; i < loginfo.length; i ++) { %>
-            <% if(loginfo[i].name == store_name){ %>
-                <tr>
-                    <td><input class="rating" max="5" step="0.01"
-                        style=<%= "--fill:#777;--starsize:1rem;--value:" + loginfo[i].rating%>
-                        type="range" value=<%= loginfo[i].rating%> ></td>
-                    <td><%= loginfo[i].content %></td>
-                </tr>
-            <% } %>
-            <% } %>
-        </tbody>
-    </table>
-    </div>
-    </div>`;
+            <div>
+            <form action="/add" method="POST">
+                <input type="hidden" id="StoreName" name="name" value=<%=store_name %>>
+                <div class="mb-2">
+                    <label for="exampleInputPassword1" class="rating-label">
+                        <div id="ratingHelp" class="form-text">별점을 남겨주세요</div>
+                        <input class="rating rating--nojs" style="--starsize:2rem;" name="rating" max="5" step="0.1" type="range" value="3">
+                    </label>
+                </div>
+                <div class="mb-2">
+                    <div id="reviewHelp" class="form-text">리뷰를 적어주세요</div>
+                    <input class="form-control" name="review" id="inputReview" aria-describedby="reviewHelp">
+                </div>
+                <div class="position-absolute top-0 end-0"">
+                    <div style="margin:10px;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="close_overlay(innOverlay)" class="btn btn-danger">Close</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div style="height: 200px; overflow-y: scroll;">
+                <table class="table" style="width: 500px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">rating</th>
+                            <th scope="col">review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% console.log(loginfo.length) %>
+                        <% for (var i=0; i < loginfo.length; i ++) { %>
+                        <% if(loginfo[i].name == store_name){ %>
+                            <tr>
+                                <td><input class="rating" max="5" step="0.01"
+                                    style=<%= "--fill:#777;--starsize:1rem;--value:" + loginfo[i].rating%>
+                                    type="range" value=<%= loginfo[i].rating%> ></td>
+                                <td><%= loginfo[i].content %></td>
+                            </tr>
+                        <% } %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>`;
 
       // 커스텀 오버레이를 생성합니다
       var position = new kakao.maps.LatLng(37.877846, 127.729500);
