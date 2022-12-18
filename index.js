@@ -37,6 +37,11 @@ app.get('/about', function (req, res) {
   res.render('about.ejs', { })
 })
 
+app.get('/contact',function(req,res) {
+  res.sendFile(__dirname + '/contact.html')
+})
+
+
 app.post('/add', function (req, res) {
   db.collection('review').insertOne({ name: req.body.name, content: req.body.review, rating: req.body.rating }, function (err, result) {
     if (err) return console.log(err)
