@@ -29,6 +29,9 @@ app.get('/map', function (req, res) {
     res.render('map.ejs', { loginfo: result })
   })
 })
+app.get('/services', function (req, res) {
+  res.render('chuncheon_map.ejs', { })
+})
 
 app.get('/about', function (req, res) {
   res.render('about.ejs', { })
