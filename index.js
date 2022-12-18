@@ -49,7 +49,13 @@ app.post('/add', function (req, res) {
     res.render('after_review.ejs', {})
   });
 });
-
+app.post('/send_contact', function (req, res) {
+  db.collection('contact').insertOne({ fname: req.body.fname,lname: req.body.lname, email: req.body.email, message: req.body.message }, function (err, result) {
+    if (err) return console.log(err)
+    console.log('save complete')
+    res.render('after_review.ejs', {})
+  });
+});
 app.get('/review', function (req, res) {
   db.collection('review').find().toArray(function (err, result) {
     console.log(result);
