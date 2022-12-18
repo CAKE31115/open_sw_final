@@ -56,7 +56,7 @@ app.post('/send_contact', function (req, res) {
   db.collection('contact').insertOne({ fname: req.body.fname,lname: req.body.lname, email: req.body.email, message: req.body.message }, function (err, result) {
     if (err) return console.log(err)
     console.log('save complete')
-    res.render('after_review.ejs', {})
+    res.render('after_contact.ejs', {})
   });
 });
 app.get('/review', function (req, res) {
