@@ -41,6 +41,9 @@ app.get('/contact',function(req,res) {
   res.sendFile(__dirname + '/contact.html')
 })
 
+app.get('/after_review_for_debug',function(req,res) {
+  res.render('after_review.ejs', { })
+})
 
 app.post('/add', function (req, res) {
   db.collection('review').insertOne({ name: req.body.name, content: req.body.review, rating: req.body.rating }, function (err, result) {
