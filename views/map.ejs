@@ -83,7 +83,7 @@
     </div>
 
 
-    <div id="map" style="width:100%;height:600px;"></div>
+    <div id="map" style="width:100%;height:650px;"></div>
 
 
     <div class="py-5 cta-section">
@@ -191,10 +191,10 @@
       var inn_polygon = new kakao.maps.Polygon({
         map: map,
           path: [
-              new kakao.maps.LatLng(37.877846, 127.729500),
-              new kakao.maps.LatLng(37.877757, 127.729596),
-              new kakao.maps.LatLng(37.877777, 127.729632),
-              new kakao.maps.LatLng(37.877890, 127.729590)
+              new kakao.maps.LatLng(37.877840, 127.729500),
+              new kakao.maps.LatLng(37.877750, 127.729596),
+              new kakao.maps.LatLng(37.877770, 127.729647),
+              new kakao.maps.LatLng(37.877870, 127.729570)
           ],
           fillColor: '#CFE7FF', // 채우기 색깔입니다
           fillOpacity: 0.5, // 채우기 불투명도 입니다
@@ -204,10 +204,28 @@
           strokeStyle: 'line',
           clickable: true
       });
-
-      var inn_content =`<% var store_name = 'store_inn'; %>
+      var flo_polygon = new kakao.maps.Polygon({
+        map: map,
+          path: [
+              new kakao.maps.LatLng(37.877855, 127.729574),
+              new kakao.maps.LatLng(37.877790, 127.729650),
+              new kakao.maps.LatLng(37.877833, 127.729715),
+              new kakao.maps.LatLng(37.877901, 127.729641)
+          ],
+          fillColor: '#CFE7FF', // 채우기 색깔입니다
+          fillOpacity: 0.5, // 채우기 불투명도 입니다
+          strokeWeight: 2,
+          strokeColor: '#CFE7FF',
+          strokeOpacity: 0.7,
+          strokeStyle: 'line',
+          clickable: true
+      });
+    var inn_content =`<% var store_name = 'Yuklim_Inn'; %>
         <div class="card" style="width: 500px;">
-            <div>
+            <div style="margin:10px;">
+                <h1> <%= store_name %> </h1>
+            </div>
+            <div style="margin:0px10px;">
             <form action="/add" method="POST">
                 <input type="hidden" id="StoreName" name="name" value=<%=store_name %>>
                 <div class="mb-2">
@@ -252,12 +270,68 @@
                 </table>
             </div>
         </div>`;
-
+    var flo_content =`<% var store_name = 'Flotea'; %>
+        <div class="card" style="width: 500px;">
+            <div style="margin:10px;">
+                <h1> <%= store_name %> </h1>
+            </div>
+            <div style="margin:0px10px;">
+            <form action="/add" method="POST">
+                <input type="hidden" id="StoreName" name="name" value=<%=store_name %>>
+                <div class="mb-2">
+                    <label for="exampleInputPassword1" class="rating-label">
+                        <div id="ratingHelp" class="form-text">별점을 남겨주세요</div>
+                        <input class="rating rating--nojs" style="--starsize:2rem;" name="rating" max="5" step="0.1" type="range" value="3">
+                    </label>
+                </div>
+                <div class="mb-2">
+                    <div id="reviewHelp" class="form-text">리뷰를 적어주세요</div>
+                    <input class="form-control" name="review" id="inputReview" aria-describedby="reviewHelp">
+                </div>
+                <div class="position-absolute top-0 end-0"">
+                    <div style="margin:10px;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="close_overlay(floOverlay)" class="btn btn-danger">Close</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div style="height: 200px; overflow-y: scroll;">
+                <table class="table" style="width: 500px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">rating</th>
+                            <th scope="col">review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% console.log(loginfo.length) %>
+                        <% for (var i=0; i < loginfo.length; i ++) { %>
+                        <% if(loginfo[i].name == store_name){ %>
+                            <tr>
+                                <td><input class="rating" max="5" step="0.01"
+                                    style=<%= "--fill:#777;--starsize:1rem;--value:" + loginfo[i].rating%>
+                                    type="range" value=<%= loginfo[i].rating%> ></td>
+                                <td><%= loginfo[i].content %></td>
+                            </tr>
+                        <% } %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>`;
       // 커스텀 오버레이를 생성합니다
-      var position = new kakao.maps.LatLng(37.877846, 127.729500);
+      var innposition = new kakao.maps.LatLng(37.877846, 127.729500);
       var innOverlay = new kakao.maps.CustomOverlay({
-          position: position,
+          position: innposition,
           content: inn_content,
+          xAnchor: 0.3,
+          yAnchor: 0.91
+      });
+      var floposition = new kakao.maps.LatLng(37.877846, 127.729500);
+      var floOverlay = new kakao.maps.CustomOverlay({
+          position: floposition,
+          content: flo_content,
           xAnchor: 0.3,
           yAnchor: 0.91
       });
@@ -277,11 +351,21 @@
         innOverlay.setMap(map);
         console.log('click');  
       });
+      kakao.maps.event.addListener(flo_polygon, 'click', function() {
+        floOverlay.setMap(map);
+        console.log('click');  
+      });
       kakao.maps.event.addListener(inn_polygon, 'mouseover', function() {   
         inn_polygon.setOptions(mouseoverOption);
       });
       kakao.maps.event.addListener(inn_polygon, 'mouseout', function() {
         inn_polygon.setOptions(mouseoutOption);
+      });
+      kakao.maps.event.addListener(flo_polygon, 'mouseover', function() {   
+        flo_polygon.setOptions(mouseoverOption);
+      });
+      kakao.maps.event.addListener(flo_polygon, 'mouseout', function() {
+        flo_polygon.setOptions(mouseoutOption);
       });
     //   window.onload = function(){
     //     map.setDraggable(false);
